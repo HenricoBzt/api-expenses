@@ -6,13 +6,11 @@ from app.settings import Settings
 
 engine = create_async_engine(Settings().DATABASE_URL)
 
-SessionLocal = AsyncSession(bind=engine)
 
 
 Base = declarative_base()
 
-def get_db():
-    db = SessionLocal()
-    with db as session:
-        yield db
+async def get_db():
+    async with AsyncSession(bind=engine,expire_on_commit=False) as session:
+        yield session
     
