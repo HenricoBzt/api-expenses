@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Literal, Optional
-from datetime import date
+import datetime
 from app.models import StatusType 
 
 class MyBaseModel(BaseModel):
@@ -14,7 +14,7 @@ class ExpenseCreate(MyBaseModel):
     category_id: int
     description: str
     amount: float
-    date: date
+    date: datetime.date
     status: StatusType
 
 class ExpensePublic(ExpenseCreate):
@@ -22,4 +22,12 @@ class ExpensePublic(ExpenseCreate):
 
 class ExpenseList(MyBaseModel):
     expenses: list[ExpensePublic]
+
+class ExpenseUpdate(MyBaseModel):
+    category_id: int 
+    description: str | None = None
+    amount: float | None = None
+    date: datetime.date | None = None
+    status: StatusType | None = None
+
     
