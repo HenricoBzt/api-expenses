@@ -57,10 +57,11 @@ async def read_users(session: T_Session,current_user: T_CurrentUser,skip: int = 
 
 
 @router.put('/{user_id}')
-async def update_user(session: T_Session,
-                user_id: int,
-                user: UserCreate,
-                current_user: T_CurrentUser):
+async def update_user(
+            session: T_Session,
+            user_id: int,
+            user: UserCreate,
+            current_user: T_CurrentUser):
 
 
     if current_user.id != user_id:
@@ -70,8 +71,8 @@ async def update_user(session: T_Session,
     current_user.email = user.email
     current_user.hashed_password = get_hash_password(user.password)
 
-    session.commit()
-    session.refresh(current_user)
+    await session.commit()
+    await session.refresh(current_user)
 
     return current_user
 
@@ -81,8 +82,9 @@ async def delete_user(session: T_Session,
                 current_user: T_CurrentUser):
     
     if current_user.id != user_id:
-        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, detail= 'Not enough permission ')
+        raise HTTPException(status_code=HTTPStatus.FORBIDDEN, 
+                            detail= 'Not enough permission ')
     
-    session.delete(current_user)
-    session.commit()
+    await session.delete(current_user)
+    await session.commit()
     return {'message': 'User Deleted'}
