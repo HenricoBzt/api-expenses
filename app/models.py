@@ -5,7 +5,8 @@ from sqlalchemy import (
     ForeignKey, 
     Date, 
     Enum, 
-    Text
+    Text,
+    Numeric
     )
 
 from sqlalchemy.orm import relationship
@@ -26,8 +27,17 @@ class UserModel(Base):
     email = Column(String, nullable=False, unique= True)
     hashed_password = Column(String, nullable=False)
 
-    relationship('CategoryModel', back_populates='user')
-    relationship('ExpensesModel', back_populates='user')
+    categories = relationship(
+        'CategoryModel', 
+        back_populates='user',
+        cascade = 'all, delete, delete-orphan'
+        )
+    
+    expenses = relationship(
+        'ExpensesModel', 
+        back_populates='user',
+        cascade = 'all, delete, delete-orphan'
+        )
 
 class CategoryModel(Base):
     __tablename__ = 'categories'
@@ -36,15 +46,22 @@ class CategoryModel(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
 
     user = relationship("UserModel", back_populates="categories")
-    expenses = relationship("ExpensesModel", back_populates="category")
+    expenses = relationship(
+        "ExpensesModel", 
+        back_populates="category",
+        cascade= 'all, delete, delete-orphan'
+        )
+
 
 class ExpensesModel(Base):
     __tablename__ = 'expenses'
+    
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     category_id = Column(Integer, ForeignKey('categories.id'))
+    title = Column(String(100),nullable=True)
     description = Column(Text(), nullable=True)
-    amount = Column(Integer, nullable=False)
+    amount = Column(Numeric(10,2), nullable=False)
     date = Column(Date, nullable=False)
     status = Column(Enum(StatusType), nullable=False)
 
