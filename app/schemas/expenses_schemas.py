@@ -9,9 +9,8 @@ class MyBaseModel(BaseModel):
     )
 
 class ExpenseCreate(MyBaseModel):
-    id: int
-    user_id: int
     category_id: int
+    title: str
     description: str
     amount: float
     date: datetime.date
@@ -25,6 +24,7 @@ class ExpenseList(MyBaseModel):
 
 class ExpenseUpdate(MyBaseModel):
     category_id: int 
+    title: str
     description: str | None = None
     amount: float | None = None
     date: datetime.date | None = None

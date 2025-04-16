@@ -86,7 +86,7 @@ async def update_expense(
 
         
         await session.commit()
-        await session.refresh(expense_stmt )
+        await session.refresh(expense_stmt)
   
         return expense_stmt
 
