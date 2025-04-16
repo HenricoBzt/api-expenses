@@ -25,6 +25,7 @@ async def create_expense(
         db_expense = ExpensesModel(
             user_id = current_user.id,
             category_id = expense.category_id,
+            title = expense.title,
             description = expense.description,
             amount = expense.amount,
             date = expense.date,
@@ -106,7 +107,7 @@ async def delete_expense(
                 )
 
 
-        if expense_obj.user_id != expense_id:
+        if expense_obj.user_id != current_user.id:
                 raise HTTPException(
                         status_code=HTTPStatus.FORBIDDEN,
                         detail= 'Not enough permission' 

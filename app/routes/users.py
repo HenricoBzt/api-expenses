@@ -9,16 +9,16 @@ from app.security import get_hash_password,get_current_user
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
-T_Session = Annotated[Session, Depends(get_db)]
+T_asyncsession = Annotated[AsyncSession, Depends(get_db)]
 T_CurrentUser = Annotated[UserModel, Depends(get_current_user)]
 
 router = APIRouter(prefix='/users',tags=['users'])
 
 
 @router.post('/', status_code=HTTPStatus.CREATED, response_model=UserPublic )
-async def create_user(user:UserCreate, session: T_Session):
+async def create_user(user:UserCreate, session: T_asyncsession):
     stmt = select(UserModel).where((UserModel.username == user.username) | (UserModel.email == user.email))
     user_db = await session.scalar(stmt)
     
@@ -49,7 +49,7 @@ async def create_user(user:UserCreate, session: T_Session):
     return user_db
 
 @router.get('/', response_model= UserList)
-async def read_users(session: T_Session,current_user: T_CurrentUser,skip: int = 0, limit: int = 100):
+async def read_users(session: T_asyncsession,current_user: T_CurrentUser,skip: int = 0, limit: int = 100):
     stmt = select(UserModel).offset(skip).limit(limit)
     user_db = await session.scalars(stmt)
 
@@ -58,7 +58,7 @@ async def read_users(session: T_Session,current_user: T_CurrentUser,skip: int = 
 
 @router.put('/{user_id}')
 async def update_user(
-            session: T_Session,
+            session: T_asyncsession,
             user_id: int,
             user: UserCreate,
             current_user: T_CurrentUser):
@@ -77,7 +77,7 @@ async def update_user(
     return current_user
 
 @router.delete('/{user_id}')
-async def delete_user(session: T_Session,
+async def delete_user(session: T_asyncsession,
                 user_id: int,
                 current_user: T_CurrentUser):
     
