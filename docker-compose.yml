@@ -1,0 +1,28 @@
+services:
+  expense_database:
+    image: postgres:16
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: expense_db
+    ports:
+      - "5432:5432"
+
+  expense_users:
+    build: .
+    image: expense_users
+    entrypoint: ./entrypoint.sh
+    depends_on:
+      - expense_database
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@expense_database:5432/expense_db
+      - SECRET_KEY=01cd6bfd8c2dd5b208b708199fad47d6bf774b368682e2a4280357bbd14199b26b8c15fc04e74cf2be4e47b228ecd0503c260dfc27431d34c4d8a5ef9747dbdc40fb2a87a45196f0def09e9fef6a8c731a8dc10c1e82190685c93ee3bbeb26b7ec933083a4822f74b19a73e96e4a37ca7001ab0f44ba70bace872c60fb9795b4f6501b16f13ff69d6d15bcf2ae33102665afe3807f16584fe1f9e39a7fd31dc3524c06b985fddc47fad6e9b96084af51229c7bb1e2880a2f2b399177c5101ed0b412e03bc6ce26916115c1a54877fd88911e3c24c67859edbb8c7ccac760ffe50f2b6cee8496e0c09ca7ddd909c993eeac19376b97cc3d1c167ccec80624fe3d
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
