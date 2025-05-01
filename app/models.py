@@ -14,10 +14,13 @@ from app.database import Base
 
 import enum
 
+from datetime import date
+
 class StatusType(enum.Enum):
     PAGO = "pago"
     PENDENTE = "pendente"
     ATRASADO = "atrasado"
+
 
 
 class UserModel(Base):
@@ -37,6 +40,12 @@ class UserModel(Base):
         'ExpensesModel', 
         back_populates='user',
         cascade = 'all, delete, delete-orphan'
+        )
+    
+    monthly_incomes = relationship(
+        "MonthlyIncomeModel", 
+        back_populates="user", 
+        cascade="all, delete, delete-orphan"
         )
 
 class CategoryModel(Base):
@@ -67,3 +76,21 @@ class ExpensesModel(Base):
 
     user = relationship("UserModel", back_populates="expenses")
     category = relationship("CategoryModel", back_populates="expenses")
+
+
+
+class MonthlyIncomeModel(Base):
+    __tablename__ = 'monthly_incomes'
+
+    id = Column(Integer, primary_key=True,index=True)
+    user_id = Column(Integer,ForeignKey('users.id'))
+    net_balance = Column(Numeric(10,2), nullable=True)
+    initial_date = Column(Date, default=date.today)
+
+    user = relationship(
+        'UserModel',
+        back_populates='monthly_incomes'
+    )
+
+
+
