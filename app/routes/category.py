@@ -29,10 +29,7 @@ async def create_category(
     category: CategoryCreate
     ):
 
-    category_db = CategoryModel(
-        name = category.name,
-        user_id = current_user.id
-    )
+    category_db = CategoryModel(**category.model_dump(),user_id=current_user)
 
     session.add(category_db)
     await session.commit()
@@ -70,7 +67,11 @@ async def update_category(
         category: CategoryCreate
         ):
     
-    category_stmt = select(CategoryModel).where(CategoryModel.id == category_id, CategoryModel.user_id == current_user.id)
+    category_stmt = select(CategoryModel).where(
+         CategoryModel.id == category_id, 
+         CategoryModel.user_id == current_user.id
+         )
+    
     category_obj = await session.scalar(category_stmt)
     
     if not category_obj:

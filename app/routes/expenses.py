@@ -22,22 +22,15 @@ async def create_expense(
         current_user: T_current_user,
         expense: ExpenseCreate):
         
-        db_expense = ExpensesModel(
-            user_id = current_user.id,
-            category_id = expense.category_id,
-            title = expense.title,
-            description = expense.description,
-            amount = expense.amount,
-            date = expense.date,
-            status = expense.status
-        )
+        db_expense = ExpensesModel(**expense.model_dump,user_id=current_user)
 
         session.add(db_expense)
         await session.commit()
-        await session.refresh(db_expense) 
+        await session.refresh(db_expense)
+         
         return db_expense
 
-@router.get('/search/', response_model=ExpenseList)
+@router.get('/', response_model=ExpenseList)
 async def read_expenses(
         session:T_asyncsession,
         current_user: T_current_user,
