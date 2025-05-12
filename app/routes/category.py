@@ -57,6 +57,12 @@ async def read_categories(
     result = await session.scalars(stmt_pagined)
     categories_list = result.all()
 
+    if not categories_list:
+         raise HTTPException(
+              status_code= HTTPStatus.NOT_FOUND,
+              detail = 'Category not found.'
+         )
+
     return {'categories': categories_list}
 
 @router.put('/{category_id}',response_model=CategoryPublic)

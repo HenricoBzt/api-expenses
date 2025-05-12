@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from http import HTTPStatus
-from app.routes import users, auth,expenses, category, monthly_income
+from app.routes import users, auth,expenses, category, monthly_income, insights,expense_classifier
 
 
 app = FastAPI( 
@@ -12,6 +12,8 @@ app.include_router(auth.router, prefix='/api')
 app.include_router(expenses.router, prefix='/api')
 app.include_router(category.router, prefix='/api')
 app.include_router(monthly_income.router,prefix='/api')
+app.include_router(insights.router,prefix='/api')
+app.include_router(expense_classifier.router,prefix='/api')
 
 @app.get('/')
 def read_root():

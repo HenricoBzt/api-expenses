@@ -3,7 +3,7 @@ from datetime import datetime,timedelta, timezone
 from http import HTTPStatus
 
 from jwt import encode, decode
-from jwt.exceptions import PyJWTError, DecodeError, ExpiredSignatureError
+from jwt.exceptions import PyJWTError, ExpiredSignatureError
 from pwdlib import PasswordHash
 
 from fastapi import Depends, HTTPException

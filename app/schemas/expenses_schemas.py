@@ -1,5 +1,3 @@
-from pydantic import BaseModel, ConfigDict
-from typing import Literal, Optional
 import datetime
 
 from app.models import StatusType 

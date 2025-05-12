@@ -1,4 +1,4 @@
-from pydantic import ConfigDict, BaseModel, Field
+from pydantic import Field
 from app.schemas.basemodel_config import MyBaseModel
 from datetime import date
 

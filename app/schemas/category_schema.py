@@ -1,4 +1,3 @@
-from pydantic import BaseModel, ConfigDict
 from app.schemas.basemodel_config import MyBaseModel
 
 class CategoryCreate(MyBaseModel):
