@@ -1,0 +1,129 @@
+from fastapi import HTTPException,Depends
+from http import HTTPStatus
+
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from sqlalchemy import select,extract
+from typing import Annotated
+
+from app.models import (
+    MonthlyIncomeModel,  
+    UserModel
+    )
+
+from app.security import get_current_user
+from app.schemas.monthlyincome_schema import (
+    MonthlyIncomeCreate,
+    MonthlyIncomeList,
+    MonthlyIncomePublic,
+    MonthlyIncomeUpdate
+    )
+
+T_current_user = Annotated[UserModel,Depends(get_current_user)]
+
+async def create_monthly_income(
+        session:AsyncSession,
+        monthlyincome_data:MonthlyIncomeCreate,
+        current_user:T_current_user
+        ):
+
+            stmt =  select(MonthlyIncomeModel).where(
+                    extract('month',MonthlyIncomeModel.initial_date) == MonthlyIncomeCreate.initial_date.month,
+                    extract('year',MonthlyIncomeModel.initial_date) == MonthlyIncomeCreate.initial_date.year,
+                    MonthlyIncomeModel.user_id == current_user.id
+                    )
+            
+            existing_income = await session.scalar(stmt)
+
+            if existing_income:
+                    raise HTTPException(
+                            status_code= HTTPStatus.CONFLICT,
+                            detail = 'There is already a registered monthly income please delete or update.'
+                    )
+            
+            monthly_income_db = MonthlyIncomeModel(**monthlyincome_data.model_dump(),user_id=current_user.id)
+
+            await session.add(monthly_income_db)
+            await session.commit()
+            await session.refresh()
+
+            return monthly_income_db
+
+async def get_monthly_income(
+                session:AsyncSession,
+                current_user:T_current_user,
+                ):
+                    stmt = select(MonthlyIncomeModel).where(MonthlyIncomeModel.user_id == current_user.id)
+                    obj_monthlyincome = await session.scalar(stmt)
+                    
+                    if not obj_monthlyincome:
+                            raise HTTPException(
+                                    status_code= HTTPStatus.NOT_FOUND,
+                                    detail= 'monthly income not found.'
+                            )
+                    
+                    return obj_monthlyincome
+
+async def update_monthlyincome(
+                session:AsyncSession,
+                current_user:T_current_user,
+                monthlyincome_id:int,
+                monthlyincome_data:MonthlyIncomeUpdate
+                ):
+                        stmt = select(MonthlyIncomeModel).where(
+                                MonthlyIncomeModel.id == monthlyincome_id,
+                                MonthlyIncomeModel.user_id == current_user.id
+                        )
+
+                        obj_monthlyincome = await session.scalar(stmt)
+
+                        if current_user.id != obj_monthlyincome.user_id:
+                                raise HTTPException(
+                                        status_code=HTTPStatus.FORBIDDEN,
+                                        detail = 'not enough permission for update.'
+                                )
+                        
+                        for key,value in monthlyincome_data.model_dump(exclude_unset=True).items():
+                                setattr(obj_monthlyincome, key, value)
+
+                        print("Antes do commit:", obj_monthlyincome.net_balance)
+
+                        await session.commit()
+                        await session.refresh(obj_monthlyincome)
+
+                        return obj_monthlyincome
+
+                # id = Column(Integer, primary_key=True,index=True)
+                # user_id = Column(Integer,ForeignKey('users.id'))
+                # net_balance = Column(Numeric(10,2), nullable=True)
+                # initial_date = Column(Date, default=date.today)
+
+async def delete_monthlyincome(
+                session:AsyncSession,
+                current_user:T_current_user,
+                monthlyincome_id:int
+                ):
+                        stmt = select(MonthlyIncomeModel).where(
+                                MonthlyIncomeModel.id == monthlyincome_id,
+                                MonthlyIncomeModel.user_id == current_user.id
+                        )
+
+                        obj_montlhyincome = await session.scalar(stmt)
+
+                        if not obj_montlhyincome:
+                                raise HTTPException(
+                                        status_code=HTTPStatus.NOT_FOUND,
+                                        detail= 'montlhyincome not found.'
+                                )
+                        
+                        await session.delete(obj_montlhyincome)
+                        await session.commit(obj_montlhyincome)
+
+                        return {'mensage': 'Monthly Income deleted.'}
+
+
+
+
+
+
+

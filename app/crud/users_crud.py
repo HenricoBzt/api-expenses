@@ -7,7 +7,7 @@ from app.security import get_hash_password
 from app.security import get_current_user
 from typing import Annotated
 
-T_CurrentUser = Annotated[UserModel, Depends(get_current_user)]
+T_current_user = Annotated[UserModel, Depends(get_current_user)]
 
 async def create_user(session,user_data:UserCreate):
     stmt = select(UserModel).where(
@@ -51,7 +51,7 @@ async def update_user(
             session,
             user_id: int,
             user_data: UserCreate,
-            current_user:T_CurrentUser):
+            current_user:T_current_user):
 
 
     if current_user.id != user_id:
@@ -70,7 +70,7 @@ async def update_user(
 async def delete_user(
         session,
         user_id: int,
-        current_user: T_CurrentUser):
+        current_user: T_current_user):
     
     if current_user.id != user_id:
         raise HTTPException(status_code=HTTPStatus.FORBIDDEN, 
@@ -78,4 +78,6 @@ async def delete_user(
     
     await session.delete(current_user)
     await session.commit()
+
     return {'message': 'User Deleted'}
+
