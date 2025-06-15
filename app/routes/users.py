@@ -38,17 +38,17 @@ async def read_users_endpoint(
 
 @router.put('/{user_id}')
 async def update_user_endpoint(
-        session: T_asyncsession,
         user_id: int,
         user: UserCreate,
+        session: T_asyncsession,
         current_user: T_CurrentUser):
     
     return await update_user(session=session,user_id=user_id,user_data=user,current_user=current_user)
     
-@router.delete('/{user_id}')
+@router.delete('/{user_id}',status_code=HTTPStatus.NO_CONTENT)
 async def delete_user_endpoint(
-    session: T_asyncsession,
     user_id: int,
+    session: T_asyncsession,
     current_user: T_CurrentUser):
 
     return await delete_user(session=session,user_id=user_id,current_user=current_user)
