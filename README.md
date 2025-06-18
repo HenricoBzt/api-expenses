@@ -61,16 +61,27 @@ docker-compose up --build
 A API estará disponível em `http://localhost:8000`. Você pode acessar a documentação interativa em `http://localhost:8000/docs`.
 
 
-ENDPOINTS PRINCIPAIS:
+## 📚 Endpoints Principais
 
 
-/api/auth/token — Login (JWT)
-/api/users/ — CRUD de usuários
-/api/category/ — CRUD de categorias
-/api/expenses/ — CRUD de despesas
-/api/monthly_income/ — CRUD de rendas mensais
-/api/insights/monthly — Insights financeiros mensais
-/api/insights/expenses_by_category — Gastos por categoria
+| Método | Caminho                                 | Descrição                                 |
+|--------|-----------------------------------------|-------------------------------------------|
+| POST   | `/api/auth/token`                       | Login e geração de token JWT              |
+| GET    | `/api/users/`                           | Lista todos os usuários                   |
+| POST   | `/api/users/`                           | Cria um novo usuário                      |
+| GET    | `/api/category/`                        | Lista todas as categorias                 |
+| POST   | `/api/category/`                        | Cria uma nova categoria                   |
+| GET    | `/api/expenses/`                        | Lista todas as despesas                   |
+| POST   | `/api/expenses/`                        | Cria uma nova despesa                     |
+| PATCH  | `/api/expenses/{id}`                    | Atualiza uma despesa                      |
+| DELETE | `/api/expenses/{id}`                    | Remove uma despesa                        |
+| GET    | `/api/monthly_income/`                  | Lista rendas mensais                      |
+| POST   | `/api/monthly_income/`                  | Cria uma renda mensal                     |
+| PATCH  | `/api/monthly_income/{id}`              | Atualiza uma renda mensal                 |
+| DELETE | `/api/monthly_income/{id}`              | Remove uma renda mensal                   |
+| GET    | `/api/insights/monthly`                 | Retorna resumo financeiro do mês          |
+| GET    | `/api/insights/expenses_by_category`    | Retorna gastos agrupados por categoria    |
+
 
 ## 🧪 Testes
 Em desenvolvimento. Em breve serão adicionados testes unitários e de integração.
