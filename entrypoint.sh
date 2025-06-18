@@ -3,7 +3,7 @@
 
 
 echo "Aguardando o banco de dados iniciar..."
-while ! nc -z expense_database 5432; do
+while ! nc -z dpg-d193q4qli9vc739iu700-a.postgres.render.com 5432; do
   sleep 1
 done
 
