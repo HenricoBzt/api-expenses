@@ -16,7 +16,7 @@ from app.schemas.monthlyincome_schema import (
 from app.models import UserModel
 from app.security import get_current_user
 from app.crud.monthlyincome_crud import (
-    create_monthly_income,
+    create_monthly_income_crud,
     get_monthly_income,
     update_monthlyincome,
     delete_monthlyincome,
@@ -42,10 +42,10 @@ async def create_monthly_income(
     monthly_income_data: MonthlyIncomeCreate,
 ):
 
-    return await create_monthly_income(
+    return await create_monthly_income_crud(
         session,
-        current_user,
         monthly_income_data,
+        current_user,
     )
 
 

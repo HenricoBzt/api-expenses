@@ -17,7 +17,7 @@ from app.schemas.monthlyincome_schema import (
 T_current_user = Annotated[UserModel, Depends(get_current_user)]
 
 
-async def create_monthly_income(
+async def create_monthly_income_crud(
     session: AsyncSession,
     monthlyincome_data: MonthlyIncomeCreate,
     current_user: T_current_user,
@@ -84,6 +84,7 @@ async def update_monthlyincome(
         raise HTTPException(
             status_code=HTTPStatus.FORBIDDEN, detail="not enough permission for update."
         )
+        
 
     for key, value in monthlyincome_data.model_dump(exclude_unset=True).items():
         setattr(obj_monthlyincome, key, value)
