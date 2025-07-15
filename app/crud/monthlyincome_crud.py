@@ -43,7 +43,7 @@ async def create_monthly_income_crud(
         **monthlyincome_data.model_dump(), user_id=current_user.id
     )
 
-    await session.add(monthly_income_db)
+    session.add(monthly_income_db)
     await session.commit()
     await session.refresh()
 
