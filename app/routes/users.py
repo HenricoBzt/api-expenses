@@ -7,7 +7,7 @@ from app.models import UserModel
 from app.schemas.user_schema import UserPublic, UserCreate, UserList
 from app.security import get_current_user
 
-from app.crud.users_crud import create_user, list_users, update_user, delete_user
+from app.crud.users_crud import create_user, list_users,list_current_user ,update_user, delete_user
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
@@ -35,6 +35,9 @@ async def read_users_endpoint(
 
     return await list_users(session=session,skip=skip,limit=limit)
 
+@router.get("/me",response_model= UserList)
+async def read_current_user(session:T_asyncsession,current_user:T_CurrentUser):
+    return await list_current_user(session,current_user)
 
 @router.put('/{user_id}')
 async def update_user_endpoint(
