@@ -25,9 +25,9 @@ async def create_monthly_income_crud(
 
     stmt = select(MonthlyIncomeModel).where(
         extract("month", MonthlyIncomeModel.initial_date)
-        == MonthlyIncomeCreate.initial_date.month,
+        == monthlyincome_data.initial_date.month,
         extract("year", MonthlyIncomeModel.initial_date)
-        == MonthlyIncomeCreate.initial_date.year,
+        == monthlyincome_data.initial_date.year,
         MonthlyIncomeModel.user_id == current_user.id,
     )
 
