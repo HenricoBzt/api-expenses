@@ -45,7 +45,7 @@ async def create_monthly_income_crud(
 
     session.add(monthly_income_db)
     await session.commit()
-    await session.refresh()
+    await session.refresh(monthly_income_db)
 
     return monthly_income_db
 
