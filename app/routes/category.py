@@ -53,7 +53,7 @@ async def get_categories(
 
 
 @router.put("/{category_id}", response_model=CategoryPublic)
-async def update_category(
+async def update_category_endpoint(
     session: T_asyncsession,
     current_user: T_current_user,
     category_id: int,
@@ -69,7 +69,7 @@ async def update_category(
 
 
 @router.delete("/{category_id}")
-async def delete_category(
+async def delete_category_endpoint(
     session: T_asyncsession, current_user: T_current_user, category_id: int
 ):
     return await delete_category(
