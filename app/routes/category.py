@@ -28,10 +28,10 @@ router = APIRouter(prefix="/category", tags=["category"])
 
 
 @router.post("/", response_model=CategoryPublic)
-async def create_category(
-    session: T_asyncsession, current_user: T_current_user, category_data: CategoryCreate
+async def create_category_endpoint(
+    session: T_asyncsession,current_user: T_current_user,category_data: CategoryCreate,  
 ):
-    return await create_category(session, current_user, category_data)
+    return await create_category(session,category_data,current_user)
 
 
 @router.get("/", response_model=CategoryList)
