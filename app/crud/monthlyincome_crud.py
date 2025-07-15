@@ -64,8 +64,7 @@ async def get_monthly_income(
             status_code=HTTPStatus.NOT_FOUND, detail="monthly income not found."
         )
 
-    return {"monthly_incomes": [obj_monthlyincome]}
-
+    return obj_monthlyincome 
 
 async def update_monthlyincome(
     session: AsyncSession,
