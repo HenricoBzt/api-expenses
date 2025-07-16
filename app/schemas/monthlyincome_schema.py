@@ -11,7 +11,7 @@ class MonthlyIncomePublic(MonthlyIncomeCreate):
     pass
 
 class MonthlyIncomeList(MyBaseModel):
-    monthly_incomes: list[MonthlyIncomePublic]
+    monthly_incomes: list[MonthlyIncomePublic] | MonthlyIncomePublic
     
 class MonthlyIncomeUpdate(MonthlyIncomeCreate):
     user_id: int
