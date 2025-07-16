@@ -49,7 +49,7 @@ async def create_monthly_income(
     )
 
 
-@router.get("/", response_model=MonthlyIncomeList)
+@router.get("/", response_model=MonthlyIncomePublic)
 async def read_monthly_income(
     session: T_asyncsession,
     current_user: T_current_user,
