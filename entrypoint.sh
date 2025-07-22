@@ -3,7 +3,7 @@
 
 
 echo "Aguardando o banco de dados iniciar..."
-while ! nc -z dpg-d193q4qli9vc739iu700-a 5432; do
+while ! nc -z dpg-d1vdg1ndiees73bigqrg-a 5432; do
   sleep 1
 done
 
