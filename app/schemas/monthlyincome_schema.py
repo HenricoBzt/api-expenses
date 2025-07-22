@@ -8,7 +8,7 @@ class MonthlyIncomeCreate(MyBaseModel):
     initial_date: date = Field(default_factory=date.today)
 
 class MonthlyIncomePublic(MonthlyIncomeCreate):
-    pass
+    id: int
 
 class MonthlyIncomeList(MyBaseModel):
     monthly_incomes: list[MonthlyIncomePublic]
