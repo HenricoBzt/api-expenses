@@ -112,6 +112,6 @@ async def delete_monthlyincome(
         )
 
     await session.delete(obj_montlhyincome)
-    await session.commit(obj_montlhyincome)
+    await session.commit()
 
     return {"mensage": "Monthly Income deleted."}
