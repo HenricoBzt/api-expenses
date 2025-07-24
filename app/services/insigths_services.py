@@ -20,8 +20,8 @@ async def get_income_for_month(
     current_user: UserModel,
     month: int,
     year: int,
-    skip: 0,
-    limit: 100,
+    skip: int = 0,
+    limit: int = 100,
 ):
     try:
         income_in_month_or_year = (
@@ -89,7 +89,7 @@ async def get_income_for_month(
 async def get_expenses_by_category(
     session: AsyncSession,
     current_user: UserModel,
-    query: str = None,
+    query: Optional[str] = None,
     skip: int = 0,
     limit: int = 100,
 ):
@@ -131,3 +131,5 @@ async def get_expenses_by_category(
             }
         )
     return {"expenses_by_category": expenses_by_category}
+
+
