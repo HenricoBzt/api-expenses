@@ -13,12 +13,12 @@ class ExpenseCreate(MyBaseModel):
     status: StatusType
 
 class ExpensePublic(ExpenseCreate):
-    pass
+    id: int
 
 class ExpenseList(MyBaseModel):
     expenses: list[ExpensePublic]
 
 class ExpenseUpdate(ExpenseCreate):
-    pass
+    id: int
 
     
