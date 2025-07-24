@@ -64,7 +64,8 @@ async def get_monthly_income(
             status_code=HTTPStatus.NOT_FOUND, detail="monthly income not found."
         )
 
-    return obj_monthlyincome 
+    return obj_monthlyincome
+
 
 async def update_monthlyincome(
     session: AsyncSession,
@@ -79,16 +80,13 @@ async def update_monthlyincome(
 
     obj_monthlyincome = await session.scalar(stmt)
 
-    if current_user.id != obj_monthlyincome.user_id:
+    if obj_monthlyincome is None:
         raise HTTPException(
-            status_code=HTTPStatus.FORBIDDEN, detail="not enough permission for update."
+            status_code=HTTPStatus.NOT_FOUND, detail="monthly income not found."
         )
-        
 
     for key, value in monthlyincome_data.model_dump(exclude_unset=True).items():
         setattr(obj_monthlyincome, key, value)
-
-    print("Antes do commit:", obj_monthlyincome.net_balance)
 
     await session.commit()
     await session.refresh(obj_monthlyincome)
