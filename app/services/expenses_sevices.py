@@ -90,7 +90,7 @@ async def update_expense_and_update_income(
             expense_data.status == StatusType.PAGO and
             obj_expense.amount != expense_data.amount
         ):
-            print("CAIU AQUI")
+    
             difference = expense_data.amount - obj_expense.amount
             if (monthly_income.net_balance - difference) < 0:
                 raise HTTPException(
