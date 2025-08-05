@@ -1,0 +1,43 @@
+[project]
+name = "finance-control-api"
+version = "0.1.0"
+description = "API for managing financial expenses and categories"
+authors = [
+    { name = "Henrico Pereira Bazante", email = "henricope792@gmail.com" },
+    ]
+
+
+dependencies = [
+    "fastapi",
+    "sqlalchemy[asyncio]", 
+    "asyncpg",            
+    "psycopg[binary]",
+    "alembic",
+    "uvicorn",
+    "pydantic-settings",
+    "python-dotenv",
+    "python-jose[cryptography]",
+    "passlib[bcrypt]",         
+    "python-multipart",         
+    "email_validator",        
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "httpx",
+    "black",
+    "ruff",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["migrations"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.black]
+line-length = 88
