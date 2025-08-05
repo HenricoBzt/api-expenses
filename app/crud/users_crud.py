@@ -2,7 +2,7 @@ from fastapi import HTTPException, Depends
 from http import HTTPStatus
 from sqlalchemy import select
 from app.models import UserModel
-from app.schemas.user_schema import UserCreate, UserList
+from app.schemas.user_schema import UserCreate
 from app.security import get_hash_password
 from app.security import get_current_user
 from typing import Annotated

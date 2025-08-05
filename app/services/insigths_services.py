@@ -1,6 +1,6 @@
 from http import HTTPStatus
-from fastapi import HTTPException,Query
-from typing import Optional,Annotated
+from fastapi import HTTPException
+from typing import Optional
 
 
 from app.models import (

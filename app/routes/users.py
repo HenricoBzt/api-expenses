@@ -9,8 +9,7 @@ from app.security import get_current_user
 
 from app.crud.users_crud import create_user, list_users,list_current_user ,update_user, delete_user
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 T_asyncsession = Annotated[AsyncSession, Depends(get_db)]

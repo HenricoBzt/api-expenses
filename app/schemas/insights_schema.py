@@ -1,7 +1,6 @@
 from app.schemas.basemodel_config import MyBaseModel
 from pydantic import Field
 from decimal import Decimal
-from datetime import date
 from typing import List
 
 

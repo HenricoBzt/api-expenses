@@ -1,16 +1,14 @@
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException
 from http import HTTPStatus
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from sqlalchemy import select
-from typing import Annotated
 
-from app.models import ExpensesModel, CategoryModel, UserModel
+from app.models import ExpensesModel, UserModel
 
-from app.security import get_current_user
 
-from app.schemas.expenses_schemas import ExpenseCreate, ExpensePublic, ExpenseList
+from app.schemas.expenses_schemas import ExpenseCreate
 
 
 # Function for create expenses.

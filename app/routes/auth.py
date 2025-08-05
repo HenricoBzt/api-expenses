@@ -3,7 +3,7 @@ from http import HTTPStatus
 from app.models import UserModel
 from app.security import  verify_password, generation_access_token,get_current_user
 from app.database import get_db
-from app.schemas.user_schema import UserCreate, Token
+from app.schemas.user_schema import Token
 
 from typing import Annotated
 

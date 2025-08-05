@@ -1,5 +1,5 @@
 from app.database import get_db
-from app.models import CategoryModel, UserModel
+from app.models import UserModel
 from app.schemas.category_schema import CategoryPublic, CategoryCreate, CategoryList
 from app.security import get_current_user
 from app.crud.category_crud import (
@@ -8,12 +8,10 @@ from app.crud.category_crud import (
     update_category,
     delete_category,
 )
-from fastapi import APIRouter, HTTPException, Query, Depends
+from fastapi import APIRouter, Query, Depends
 
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from http import HTTPStatus
 
 from typing import Annotated, Optional
 

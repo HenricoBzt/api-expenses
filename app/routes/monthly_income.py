@@ -10,7 +10,6 @@ from app.database import get_db
 from app.schemas.monthlyincome_schema import (
     MonthlyIncomeCreate,
     MonthlyIncomePublic,
-    MonthlyIncomeList,
     MonthlyIncomeUpdate,
 )
 from app.models import UserModel
