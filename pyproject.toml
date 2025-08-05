@@ -21,6 +21,7 @@ dependencies = [
     "python-multipart",         
     "email_validator",    
     "PyJWT", 
+    "pwdlib",
 ]
 
 [project.optional-dependencies]
