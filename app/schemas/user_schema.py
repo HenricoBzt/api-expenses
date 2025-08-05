@@ -4,7 +4,6 @@ from pydantic import BaseModel, EmailStr, ConfigDict
 class UserPublic(BaseModel):
     id: int
     username: str
-    email: EmailStr
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -16,6 +15,12 @@ class UserCreate(BaseModel):
 
 class UserList(BaseModel):
     users: list[UserPublic]
+
+
+class UserListMe(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
 
 
 class Token(BaseModel):

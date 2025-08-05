@@ -4,7 +4,7 @@ from typing import Annotated
 
 from app.database import get_db
 from app.models import UserModel
-from app.schemas.user_schema import UserPublic, UserCreate, UserList
+from app.schemas.user_schema import UserPublic, UserCreate, UserList, UserListMe
 from app.security import get_current_user
 
 from app.crud.users_crud import (
@@ -41,7 +41,7 @@ async def read_users_endpoint(
     return await list_users(session=session, skip=skip, limit=limit)
 
 
-@router.get("/me", response_model=UserList)
+@router.get("/me", response_model=UserListMe)
 async def read_current_user(session: T_asyncsession, current_user: T_CurrentUser):
     return await list_current_user(session, current_user)
 
