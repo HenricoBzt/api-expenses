@@ -1,14 +1,14 @@
 from app.schemas.basemodel_config import MyBaseModel
 
+
 class CategoryCreate(MyBaseModel):
     name: str
 
+
 class CategoryPublic(MyBaseModel):
     id: int
-    name:str
+    name: str
+
 
 class CategoryList(MyBaseModel):
     categories: list[CategoryPublic]
-
-
-

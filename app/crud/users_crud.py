@@ -47,7 +47,8 @@ async def list_users(session, skip: int, limit: int):
 
     return {"users": user_db}
 
-async def list_current_user(session,current_user: T_current_user):
+
+async def list_current_user(session, current_user: T_current_user):
     stmt = select(UserModel).where(UserModel.id == current_user.id)
     user_obj = await session.scalars(stmt)
 

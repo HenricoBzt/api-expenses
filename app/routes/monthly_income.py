@@ -54,10 +54,7 @@ async def read_monthly_income(
     current_user: T_current_user,
 ):
 
-    return await get_monthly_income(
-        session,
-        current_user
-    )
+    return await get_monthly_income(session, current_user)
 
 
 @router.patch("/{monthly_income_id}", response_model=MonthlyIncomePublic)

@@ -14,7 +14,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, extract, func
 
 
-
 async def get_income_for_month(
     session: AsyncSession,
     current_user: UserModel,
@@ -131,5 +130,3 @@ async def get_expenses_by_category(
             }
         )
     return {"expenses_by_category": expenses_by_category}
-
-

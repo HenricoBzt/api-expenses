@@ -101,4 +101,3 @@ async def delete_category(
     await session.commit()
 
     return {"detail": "Category deleted successfully."}
-

@@ -60,7 +60,7 @@ async def list_expenses(
     return {"expenses": expenses_list}
 
 
-#Function for get expense by id.
+# Function for get expense by id.
 async def get_expense_by_id(
     session: AsyncSession,
     current_user: UserModel,
@@ -84,6 +84,7 @@ async def get_expense_by_id(
         )
 
     return obj_expense
+
 
 # Function Update Expenses
 async def update_expenses(
@@ -112,7 +113,6 @@ async def update_expenses(
     await session.refresh(obj_expense)
 
     return obj_expense
-
 
 
 # Function Delete Expenses

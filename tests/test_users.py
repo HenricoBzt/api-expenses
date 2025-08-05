@@ -3,17 +3,17 @@ from http import HTTPStatus
 
 def test_create_user(client):
     response = client.post(
-        '/users/',
+        "/users/",
         json={
-            'username': 'JonasL',
-            'email': 'jonaszin@gmail.com',
-            'password': 'admin12',
+            "username": "JonasL",
+            "email": "jonaszin@gmail.com",
+            "password": "admin12",
         },
     )
 
     assert response.status_code == HTTPStatus.CREATED
     assert response.json() == {
-            'username': 'JonasL',
-            'email': 'jonaszin@gmail.com',
-            'password': 'admin12',
-        }
+        "username": "JonasL",
+        "email": "jonaszin@gmail.com",
+        "password": "admin12",
+    }

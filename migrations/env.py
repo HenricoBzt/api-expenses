@@ -9,7 +9,7 @@ from alembic import context
 
 
 config = context.config
-config.set_main_option('sqlalchemy.url', Settings().DATABASE_URL)
+config.set_main_option("sqlalchemy.url", Settings().DATABASE_URL)
 
 
 if config.config_file_name is not None:
@@ -17,6 +17,7 @@ if config.config_file_name is not None:
 
 # Metadados para autogeração das migrações
 target_metadata = Base.metadata
+
 
 def run_migrations_offline() -> None:
 
@@ -31,11 +32,13 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
+
 def do_run_migrations(connection):
     context.configure(connection=connection, target_metadata=target_metadata)
 
     with context.begin_transaction():
         context.run_migrations()
+
 
 async def run_async_migrations():
     connectable = async_engine_from_config(
@@ -49,9 +52,11 @@ async def run_async_migrations():
 
     await connectable.dispose()
 
+
 def run_migrations_online() -> None:
-    
+
     asyncio.run(run_async_migrations())
+
 
 if context.is_offline_mode():
     run_migrations_offline()
